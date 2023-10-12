@@ -6,12 +6,20 @@ from telethon.tl.types import ChannelParticipantsAdmins
 
 from datetime import datetime
 
+from telethon.tl import types
+import asyncio
+
 from pyrogram import filters
 from pyrogram.errors import PeerIdInvalid
 from pyrogram.types import Message, User
 from pyrogram.types.messages_and_media import Message
 from pyrogram import Client, filters
 import time
+
+from telethon.tl import types
+from telethon.tl.custom import Button
+import random
+import asyncio
 
 import datetime
 import motor.motor_asyncio
@@ -73,7 +81,7 @@ etiketuye = []
 
 # ~~~~~~~~~~~~~~~~~~~~~~~ gece ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-startmesaj = "👋🏻 ᴍᴇʀʜᴀʙᴀ, ʙᴇɴ ᴀʜʀɪ! ʙᴀᴢı ᴋᴜʟʟᴀɴışʟı ᴏ̈ᴢᴇʟʟɪᴋʟᴇʀᴇ sᴀʜɪᴘ ᴛᴇʟᴇɢʀᴀᴍ ᴜ̈ʏᴇ ᴇᴛɪᴋᴇᴛʟᴇᴍᴇ ʙᴏᴛᴜʏᴜᴍ.\n\n📚 sɪᴢᴇ ʏᴀʀᴅɪᴍᴄɪ ᴏʟᴀʙɪʟᴍᴇᴍ ɪᴄ̧ɪɴ ᴀşşᴀɢ̆ɪᴅᴀᴋɪ ʙᴜᴛᴏɴʟᴀʀɪ ᴋᴜʟʟᴀɴɪɴ!**" 
+startmesaj = "👋🏻 ᴍᴇʀʜᴀʙᴀ, ʙᴇɴ ᴀʜʀɪ! ʙᴀᴢı ᴋᴜʟʟᴀɴışʟı ᴏ̈ᴢᴇʟʟɪᴋʟᴇʀᴇ sᴀʜɪᴘ ᴛᴇʟᴇɢʀᴀᴍ ᴜ̈ʏᴇ ᴇᴛɪᴋᴇᴛʟᴇᴍᴇ ʙᴏᴛᴜʏᴜᴍ.\n\n📚 sɪᴢᴇ ʏᴀʀᴅɪᴍᴄɪ ᴏʟᴀʙɪʟᴍᴇᴍ ɪᴄ̧ɪɴ ᴀşşᴀɢ̆ɪᴅᴀᴋɪ ʙᴜᴛᴏɴʟᴀʀɪ ᴋᴜʟʟᴀɴɪɴ!" 
 noadmin = "Üzgünüm Ama Yönetici Değilsiniz!"
 nogroup = "Komutlar Sadece Grublarda Kullanılabilir!"
 nomesaj = "Bana Bir Mesaj Verin!"
@@ -196,7 +204,7 @@ async def mentionalladmin(event):
 
     sender = await event.get_sender()
     rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
-    if event.chat_id in rxyzdev_tagTot:await event.respond(f"**✅ Etiketleme İşlemi Başarıyla İptal Edildi!", buttons=(
+    if event.chat_id in rxyzdev_tagTot:await event.respond(f"✅ Etiketleme İşlemi Başarıyla İptal Edildi!", buttons=(
                       [
                       Button.url('💌 ʀᴇsᴍɪ ᴋᴀɴᴀʟ 💌', f'https://t.me/{GROUP_SUPPORT}')
                       ]
@@ -251,9 +259,9 @@ async def cancel(event):
 
   sender = await event.get_sender()
   rxyzdev_stopT = f"[{sender.first_name}](tg://user?id={sender.id})"      
-  if event.chat_id in rxyzdev_tagTot:await event.respond(f"**⛔ İşlem İptal Edildi .\n\n👤 Etiketlerin Sayısı : {rxyzdev_tagTot[event.chat_id]}\n🗣 İptal Eden : {rxyzdev_stopT}**", buttons=(
+  if event.chat_id in rxyzdev_tagTot:await event.respond(f"⛔ İşlem İptal Edildi .\n\n👤 Etiketlerin Sayısı : {rxyzdev_tagTot[event.chat_id]}\n🗣 İptal Eden : {rxyzdev_stopT}**", buttons=(
                       [
-                      Button.url('💌 ʀᴇsᴍɪ ᴋᴀɴᴀʟ 💌', f'https://t.me/{GROUP_SUPPORT}')
+                      Button.url('📣ʀᴇsᴍɪ ᴋᴀɴᴀʟ📣', f'https://t.me/{GROUP_SUPPORT}')
                       ]
                     ),
                     link_preview=False)
@@ -266,7 +274,7 @@ async def start(event):
     async for usr in client.iter_participants(event.chat_id):
      ad = f"**👋🏻 Merhaba**"
      await event.reply(f"{ad} {startmesaj}", buttons=(
-                      [Button.url('💌 ʙᴇɴɪ ɢʀᴜʙᴀ ᴇᴋʟᴇ 💌', f'https://t.me/{BOT_USERNAME}?startgroup=a')],
+                      [Button.url('🎉 ʙᴇɴɪ ɢʀᴜʙᴀ ᴇᴋʟᴇ 🎉', f'https://t.me/{BOT_USERNAME}?startgroup=a')],
                       [
                       Button.url("📚 ᴋᴏᴍᴜᴛʟᴀʀ", f'https://t.me/{GROUP_SUPPORT}')
                       ],[
@@ -353,6 +361,251 @@ async def eros(event):
         percentage = random.randint(1, 100)  # Rastgele bir yüzde hesapla
         await event.respond(f"**💌 Eros'un oku atıldı.\n• Aşıklar  :\n\n@{first_user.username} ❣️ @{second_user.username}\n\n📊 Eşleşme Yüzdesi: {percentage}%**")
 
+@client.on(events.NewMessage(pattern='/slap'))
+async def slap(event):
+    if event.is_private:
+        return await event.respond("Bu komut gruplar ve kanallar için geçerlidir!")
+
+    if event.reply_to_msg_id:
+        reply_message = await event.get_reply_message()
+        user = reply_message.sender
+        if user:
+            user_name = user.first_name
+            slap_phrases = [
+                f"{user_name}'nin üzerine pasta fırlattı!",
+                f"{user_name}'nin üstüne benzin döktü!",
+                f"{user_name}'yi ateşe attı!",
+                f"{user_name}'nin üstüne su döktü!",
+                f"{user_name}'yi dondurdu!",
+                f"{user_name}'nin üzerine pasta fırlattı!",
+                f"{user_name}'yi Zencilere Sattı!",
+                f"{user_name}'yi Turşu Kavonozuna Soktu!",
+                f"{user_name}'nin Üzerine Buz Dolabı Attı!",
+                f"{user_name}'nin Kafasını Duvara Sürterek Yaktı!",
+                f"{user_name}'yi Ormana Kaçırdı!",
+                f"{user_name}'yi Banyoda Sukast Etti!",
+            ]
+            slap_phrase = random.choice(slap_phrases)
+            await event.respond(f"{event.sender.first_name} {slap_phrase}")
+        else:
+            await event.respond("Üzgünüm, kullanıcıyı bulamıyorum!")
+    else:
+        await event.respond("Bu komutu kullanabilmek için bir mesaja yanıt vermelisiniz!")
+
+
+@client.on(events.NewMessage(pattern="^/bots$"))
+async def list_bots(event):
+    # Sadece grup ve kanallarda çalıştır
+    if event.is_private:
+        await event.respond("Bu komut yalnızca grup ve kanallarda kullanılabilir!")
+        return
+
+    # "Bir saniye bekleyin..." mesajını gönder
+    message = await event.respond("🔁 Hazırlanıyor...")
+
+    # 3 saniye bekle
+    await asyncio.sleep(3)
+
+    # "Bir saniye bekleyin..." mesajını sil
+    await message.delete()
+
+    # Grup veya kanal katılımcılarını al
+    users = await client.get_participants(event.chat_id, limit=200)
+
+    bot_list = []
+    for user in users:
+        if user.bot:
+            bot_list.append(user)
+
+    # Bot listesini oluştur ve gönder
+    if bot_list:
+        bot_names = "\n".join([f"➻ @{user.username}" for user in bot_list])
+        await event.respond(f"🤖 Gruptaki Botlar Şunlar:\n\n{bot_names}")
+    else:
+        await event.respond("🤖 Bu Grupta Hiç Bot Bulamadım!")
+
+
+# Soru listesi (İstediğiniz kadar soru ekleyebilirsiniz)
+questions = [
+    "Nerdesin?",
+    "Napiyorsun?",
+    "Nasılsın?",
+    "Bugün hava nasıl?",
+    "Son film tavsiyen nedir?",
+    "Hafta sonu planın var mı?",
+    "Hangi kitabı okuyorsun?",
+    "En sevdiğin yemek nedir?",
+    "En son seyahat ettiğin yer neresiydi?",
+    "Hobilerin nelerdir?",
+    "En sevdiğin mevsim nedir?",
+    "Hangi sporu seversin?",
+    "En son izlediğin konser hangisiydi?",
+    "Hayat felsefen nedir?",
+    "En sevdiğin tatil yeri neresi?",
+    "Son okuduğun kitap neydi?",
+    "En sevdiğin dizi/film nedir?",
+    "Hafta içi en sevdiğin gün hangisi?",
+    "En sevdiğin renk nedir?",
+    "En sevdiğin müzik türü nedir?",
+    "Gelecekle ilgili bir hayalin var mı?",
+    "En sevdiğin çiçek nedir?",
+    "Hangi ülkeyi ziyaret etmek istersin?",
+    "En sevdiğin spor takımı hangisi?",
+    "Hayatta gerçekleştirmek istediğin bir hedefin var mı?",
+    "En sevdiğin meyve nedir?",
+    "Son kez gittiğin restoran neresiydi?",
+    "En son izlediğin TV programı neydi?",
+    "En çok korktuğun şey nedir?",
+    "En sevdiğin müzik enstrümanı nedir?",
+    "En son hangi oyunu oynadın?",
+    "En çok takip ettiğin spor dalı hangisi?",
+    "Hayatta yapmak istediğin seyahat nedir?",
+    "En sevdiğin hayvan nedir?",
+    "En son ne zaman güldün?",
+    "Hayatındaki en büyük başarı nedir?",
+    "Son zamanlarda izlediğin en iyi film nedir?",
+    "İlgi alanlarınız nelerdir?",
+    "Dünya turu yapma fırsatın olsa, hangi ülkeleri ziyaret ederdin?",
+    "En sevdiğin tarihi dönem nedir?",
+    "En iyi arkadaşınla yaptığın en eğlenceli şey nedir?",
+    "Sana ilham veren kişi kimdir?",
+    "Hayatında dönüm noktası niteliğinde bir anı paylaşır mısın?",
+    "En sevdiğin kış sporu nedir?",
+    "Bir süper gücün olsaydı, ne olmasını isterdin?",
+    "En sevdiğin çizgi film karakteri kim?",
+    "En sevdiğin sanat eseri nedir?",
+    "En son katıldığın etkinlik nedir?",
+    "En sevdiğin klasik film hangisi?",
+    "Bir gün yapmayı hayal ettiğin şey nedir?",
+    "En sevdiğin takım veya takımlar hangileri?",
+    "En güzel çocukluk anını paylaşır mısın?",
+    "En sevdiğin sezon nedir?",
+    "Geçmişteki en büyük ders nedir?",
+    "Hayatındaki en büyük hayal nedir?",
+    "En sevdiğin restoran nedir?",
+    "Hangi tarihi kişiyi tanıma fırsatını isterdin?",
+    "En sevdiğin televizyon dizisi hangisi?",
+    "En çok gurur duyduğun şey nedir?",
+    "En son hangi yemeği yaptın?",
+    "En sevdiğin kahve türü nedir?",
+    "En son ne zaman seyahat ettin?",
+    "Hayatındaki en büyük hayal kırıklığı nedir?",
+    "Hangi müziği dinlerken en çok huzur bulursun?",
+    "Gelecekte yapmayı düşündüğün tatil nedir?",
+    "En sevdiğin tatil anısı nedir?",
+    "Son zamanlarda keşfettiğin yeni bir hobi nedir?",
+    "En son gittiğin konser veya etkinlik hangisiydi?",
+    "En iyi arkadaşının seninle paylaştığı en güzel anı nedir?",
+    "Hangi filmi defalarca izledin?",
+    "Hayatında değiştirmeyi düşündüğün bir şey var mı?",
+    "En sevdiğin çizgi roman karakteri kim?",
+    "Hangi sporu yapmayı en çok seversin?",
+    "Hayatta yapmak istediğin en cesurca şey nedir?",
+    "Hangi ünlüyle tanışma fırsatın olsa, kim olurdu?",
+    "Hangi ünlüyle tanışmak en çok heyecanlandırır seni?",
+    "En sevdiğin meyve suyu nedir?",
+    "En sevdiğin pizza malzemesi nedir?",
+    "En iyi tatlı nedir?",
+    "Hangi yiyeceği en çok seversin?",
+    "Hangi çeşit müziği dinlemeyi en çok seversin?",
+    "En sevdiğin meyve nedir?",
+    "En sevdiğin spor dalı nedir?",
+    "Gelecekte yaşamak istediğin bir yer var mı?",
+    "Hangi dil veya enstrümanı öğrenmek isterdin?",
+    "En sevdiğin şehir nedir?",
+    "En sevdiğin manzara nedir?",
+    "En sevdiğin deniz ürünü nedir?",
+    "En sevdiğin çikolata çeşidi nedir?",
+    "En son kez gittiğin tatil yeri neresiydi?",
+    "En çok kullandığın uygulama nedir?",
+    "En sevdiğin tatil etkinliği nedir?",
+    "En güzel günün hangisiydi?",
+    "Hangi tarihi karakterle sohbet etmek isterdin?",
+    "En son hangi restoranda yemek yedin?",
+    "Hangi yerel yemeği denemek istersin?",
+    "En sevdiğin tatil aktivitesi nedir?",
+    "Hangi tatil hatıran en özel?",
+    "En sevdiğin yiyecek veya içecek nedir?",
+    "En sevdiğin kış aktivitesi nedir?",
+    "Hangi çiçeği en çok seversin?",
+    "En son izlediğin konser hangisiydi?",
+    "Hangi hayvanı evcil olarak beslemek istersin?",
+    "Hangi dönemde yaşamayı isterdin?",
+    "Hangi hobiye sahip olmak isterdin?",
+    "En sevdiğin festivale gitmek ister misin?",
+    "En sevdiğin dönem filmleri hangileri?",
+    "Hangi tarihi olaya tanıklık etmek isterdin?",
+    "En sevdiğin çocukluk oyunu nedir?",
+    "Hangi sanat eserini incelemek isterdin?",
+    "Hangi ülkeyi ziyaret etmek istersin?",
+    "En sevdiğin tarih dönemi nedir?",
+    "Hangi tarihi figürü tanımak isterdin?",
+    "En sevdiğin radyo istasyonu nedir?",
+    "Hangi klasik eseri okumak isterdin?",
+    "En sevdiğin film yönetmeni kim?",
+    "Hangi ünlüyle bir gün geçirmek isterdin?",
+    "En iyi arkadaşının seninle paylaştığı en güzel anı nedir?",
+    "En sevdiğin seyahat destinasyonu nedir?"
+]
+
+
+current_question_index = 0  # Şu anki soru endeksi
+tagging = False  # Etiketleme işlemi devam ediyor mu?
+
+@client.on(events.NewMessage(pattern="/dtag"))
+async def start_tagging(event):
+    global current_question_index, tagging
+    if tagging:
+        await event.respond("Şu anda başka bir etiketleme işlemi devam ediyor. Lütfen bekleyin.")
+        return
+
+    user = await event.get_sender()
+    user_first_name = user.first_name
+
+    # Sadece gruplar ve kanallar için işlem yapın
+    if isinstance(event.chat, (types.Chat, types.Channel)):
+        # Grubun adminlerini alın
+        admins = await client.get_participants(event.chat_id, filter=ChannelParticipantsAdmins)
+
+        # Eğer kullanıcı grup adminlerinden biriyse devam edin
+        if user in admins:
+            # Hedeflenen gruptaki son aktif olan 50 kişiyi alın
+            group_entity = event.chat_id
+            participants = await client.get_participants(group_entity, limit=50)
+
+            if participants:
+                random.shuffle(participants)
+                tagging = True  # Etiketleme işlemi başladı
+
+                while current_question_index < len(questions):
+                    for participant in participants:
+                        if not participant.bot and not participant.deleted:
+                            username = participant.username
+                            if username:
+                                question = questions[current_question_index]
+                                tagged_message = f"⤇ @{username}, {question}"
+                                await event.respond(tagged_message)
+                                await asyncio.sleep(2)  # 2 saniye bekle
+                                current_question_index += 1
+
+                tagging = False  # Etiketleme işlemi bitti
+                current_question_index = 0  # Soruları sıfırla
+                await event.respond("Tüm üyeler etiketlendi!")
+        else:
+            await event.respond("Bu komutu kullanabilmek için bir grup admini olmalısınız!")
+    else:
+        await event.respond("Bu komut yalnızca gruplar ve kanallarda kullanılabilir!")
+
+@client.on(events.NewMessage(pattern="/cancel"))
+async def cancel_tagging(event):
+    global tagging
+    tagging = False  # Etiketleme işlemi iptal edildi
+    await event.respond(
+        "Etiketleme İşlemi İptal Edildi!",
+        buttons=[
+            [Button.url('🛡ᴏᴡɴᴇʀ🛡', 'https://t.me/rahmetiNC')]
+        ]
+    )
 
 
 ################### VERİTABANI VERİ GİRİŞ ÇIKIŞI #########################
