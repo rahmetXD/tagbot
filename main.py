@@ -426,7 +426,7 @@ async def list_bots(event):
 
 
 # Soru listesi (İstediğiniz kadar soru ekleyebilirsiniz)
-questions = [
+soru_listesi = [
     "Nerdesin?",
     "Napiyorsun?",
     "Nasılsın?",
@@ -548,67 +548,60 @@ questions = [
     "En sevdiğin seyahat destinasyonu nedir?"
 ]
 
+@client.on(events.NewMessage(pattern="^/dtag"))
+async def tag(event):
+    global gece_tag
+    rxyzdev_tagTot[event.chat_id] = 0
+    if event.is_private:
+        return await event.respond(f"{nogroup}")
 
-current_question_index = 0  # Şu anki soru endeksi
-tagging = False  # Etiketleme işlemi devam ediyor mu?
+    admins = []
+    async for admin in client.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
+        admins.append(admin.id)
+    if event.sender_id not in admins:
+        return await event.respond(f"{noadmin}")
 
-@client.on(events.NewMessage(pattern="/dtag"))
-async def start_tagging(event):
-    global current_question_index, tagging
-    if tagging:
-        await event.respond("Şu anda başka bir etiketleme işlemi devam ediyor. Lütfen bekleyin.")
-        return
+    anlik_calisan.append(event.chat_id)
 
-    user = await event.get_sender()
-    user_first_name = user.first_name
+    gece_tag.append(event.chat_id)
+    usrnum = 0
+    usrtxt = ""
+    await event.respond("🔮 Etiketleme İşlemi Başarıyla Başlatıldı!", buttons=(
+        [
+            Button.url('📣ᴋᴀɴᴀʟ📣', f'https://t.me/{GROUP_SUPPORT}')
+        ]
+    ),
+        link_preview=False)
 
-    # Sadece gruplar ve kanallar için işlem yapın
-    if isinstance(event.chat, (types.Chat, types.Channel)):
-        # Grubun adminlerini alın
-        admins = await client.get_participants(event.chat_id, filter=ChannelParticipantsAdmins)
+    async for usr in client.iter_participants(event.chat_id):
+        rxyzdev_tagTot[event.chat_id] += 1
+        usrnum += 1
 
-        # Eğer kullanıcı grup adminlerinden biriyse devam edin
-        if user in admins:
-            # Hedeflenen gruptaki son aktif olan 50 kişiyi alın
-            group_entity = event.chat_id
-            participants = await client.get_participants(group_entity, limit=50)
+        # Kullanıcıyı etiketle ve rastgele bir soru seç
+        random_user = random.choice(usr)
+        random_user_name = random_user.first_name
+        random_question = random.choice(soru_listesi)
 
-            if participants:
-                random.shuffle(participants)
-                tagging = True  # Etiketleme işlemi başladı
+        usrtxt += f"[{random_user_name}](tg://user?id={random_user.id}) , ({random_question})"
 
-                while current_question_index < len(questions):
-                    for participant in participants:
-                        if not participant.bot and not participant.deleted:
-                            username = participant.username
-                            if username:
-                                question = questions[current_question_index]
-                                tagged_message = f"⤇ @{username}, {question}"
-                                await event.respond(tagged_message)
-                                await asyncio.sleep(2)  # 2 saniye bekle
-                                current_question_index += 1
+        if event.chat_id not in gece_tag:
+            return
+        if usrnum == 1:  # 8 kullanıcıyı etiketlemek için
+            await client.send_message(event.chat_id, f"➻ {usrtxt}")
+            await asyncio.sleep(2)
+            usrnum = 0
+            usrtxt = ""
 
-                tagging = False  # Etiketleme işlemi bitti
-                current_question_index = 0  # Soruları sıfırla
-        else:
-            await event.respond("Bu komutu kullanabilmek için bir grup admini olmalısınız!")
-    else:
-        await event.respond("Bu komut yalnızca gruplar ve kanallarda kullanılabilir!")
-
-@client.on(events.NewMessage(pattern="/cancel"))
-async def cancel_tagging(event):
-    global tagging
-    if tagging:
-        tagging = False  # Etiketleme işlemi iptal edildi
-        current_question_index = 0  # Soruları sıfırla
-        await event.respond(
-            "Etiketleme İşlemi İptal Edildi!",
-            buttons=[
-                [Button.url('🛡ᴏᴡɴᴇʀ🛡', 'https://t.me/rahmetiNC')]
+    sender = await event.get_sender()
+    rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
+    if event.chat_id in rxyzdev_tagTot:
+        await event.respond(f"✅ İşlem Tamamlandı!\n\n👤 Etiketlerin Sayısı : {rxyzdev_tagTot[event.chat_id]}\n🗣 İşlemi Başlatan : {rxyzdev_initT}", buttons=(
+            [
+                Button.url('📣ʀᴇsᴍɪ ᴋᴀɴᴀʟ📣', f'https://t.me/{GROUP_SUPPORT}')
             ]
-        )
-    else:
-        await event.respond("Şu anda etiketleme işlemi devam etmiyor.")
+        ),
+            link_preview=False)
+
 
 
 ################### VERİTABANI VERİ GİRİŞ ÇIKIŞI #########################
