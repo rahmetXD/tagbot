@@ -562,8 +562,9 @@ async def tag(event):
         return await event.respond(f"{noadmin}")
 
     anlik_calisan.append(event.chat_id)
-
     gece_tag.append(event.chat_id)
+    rxyzdev_tagTot[event.chat_id] = 0
+
     usrnum = 0
     usrtxt = ""
     await event.respond("🔮 Etiketleme İşlemi Başarıyla Başlatıldı!", buttons=(
@@ -573,24 +574,16 @@ async def tag(event):
     ),
         link_preview=False)
 
-    async for usr in client.iter_participants(event.chat_id):
-        rxyzdev_tagTot[event.chat_id] += 1
-        usrnum += 1
+    # Kullanıcı listesini burada saklayın
+    user_list = [user async for user in client.iter_participants(event.chat_id)]
 
-        # Kullanıcıyı etiketle ve rastgele bir soru seç
-        random_user = random.choice(usr)
+    if user_list:
+        random_user = random.choice(user_list)
         random_user_name = random_user.first_name
-        random_question = random.choice(soru_listesi)
+        random_question = random.choice(soru_listesi)  # Soruyu rastgele seçin
+        usrtxt = f"[{random_user_name}](tg://user?id={random_user.id}), {random_question}"
 
-        usrtxt += f"[{random_user_name}](tg://user?id={random_user.id}) , ({random_question})"
-
-        if event.chat_id not in gece_tag:
-            return
-        if usrnum == 1:  # 8 kullanıcıyı etiketlemek için
-            await client.send_message(event.chat_id, f"➻ {usrtxt}")
-            await asyncio.sleep(2)
-            usrnum = 0
-            usrtxt = ""
+    await client.send_message(event.chat_id, f"➻ {usrtxt}")
 
     sender = await event.get_sender()
     rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
@@ -601,7 +594,6 @@ async def tag(event):
             ]
         ),
             link_preview=False)
-
 
 
 ################### VERİTABANI VERİ GİRİŞ ÇIKIŞI #########################
