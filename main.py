@@ -42,9 +42,9 @@ LOGGER = logging.getLogger(__name__)
 
 api_id = int(os.environ.get("APP_ID","18049084"))
 api_hash = os.environ.get("API_HASH","7e74b1e22026fcc291d32b3d431aa21e")
-bot_token = os.environ.get("TOKEN","6445812901:AAECbrb_kuwxuLMKKhpNUH0zh2K8AAzxBsc") # Botunuzun Tokenini Girin.
+bot_token = os.environ.get("TOKEN","6110153217:AAFKsN-9NVtVtPTsGpIW03iPCNPb8B-Oik0") # Botunuzun Tokenini Girin.
 sahib = os.environ.get("sahib", "rahmetiNC") # Sahiplik Hesabin Kullanıcı Adını Girin .
-BOT_ID = int(os.environ.get("BOT_ID", "6445812901")) # Botunuzun İd'si ( Tokenin Başındaki Rakamları ) Girin .
+BOT_ID = int(os.environ.get("BOT_ID", "6110153217")) # Botunuzun İd'si ( Tokenin Başındaki Rakamları ) Girin .
 DATABASE_URL = os.environ.get("DATABASE_URL","mongodb+srv://lexper:ahritv84@cluster0.hmry6dv.mongodb.net/?retryWrites=true&w=majority") # MongoDB veritabanınızın url'si.
 BOT_USERNAME = os.environ.get("BOT_USERNAME","AhriTaggerBot") # Botunuzun kullanıcı adı.
 LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL","-1001910817002")) # Botunuzun eylemleri kaydedeceği kayıt grubunun id'si.
@@ -73,10 +73,10 @@ etiketuye = []
 
 # ~~~~~~~~~~~~~~~~~~~~~~~ gece ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-startmesaj = "Bazı Kullanışlı Özelliklere Sahip Telegram Üye Etiketleme Botuyum.\n\n📚 Komutlar Butonuna Tıklayın ve Komutları Öğrenin.**" 
-noadmin = "Üzgünüm Ama Yönetici Değilsiniz."
-nogroup = "Komutlar Sadece Grublarda Kullanılabilir."
-nomesaj = "Bana Bir Mesaj Verin."
+startmesaj = "👋🏻 ᴍᴇʀʜᴀʙᴀ, ʙᴇɴ ᴀʜʀɪ! ʙᴀᴢı ᴋᴜʟʟᴀɴışʟı ᴏ̈ᴢᴇʟʟɪᴋʟᴇʀᴇ sᴀʜɪᴘ ᴛᴇʟᴇɢʀᴀᴍ ᴜ̈ʏᴇ ᴇᴛɪᴋᴇᴛʟᴇᴍᴇ ʙᴏᴛᴜʏᴜᴍ.\n\n📚 sɪᴢᴇ ʏᴀʀᴅɪᴍᴄɪ ᴏʟᴀʙɪʟᴍᴇᴍ ɪᴄ̧ɪɴ ᴀşşᴀɢ̆ɪᴅᴀᴋɪ ʙᴜᴛᴏɴʟᴀʀɪ ᴋᴜʟʟᴀɴɪɴ!**" 
+noadmin = "Üzgünüm Ama Yönetici Değilsiniz!"
+nogroup = "Komutlar Sadece Grublarda Kullanılabilir!"
+nomesaj = "Bana Bir Mesaj Verin!"
 
 #######################
 
@@ -100,19 +100,19 @@ async def tag(event):
     mode = "text_on_reply"
     msg = event.reply_to_msg_id
     if msg == None:
-        return await event.respond("__ᴇꜱᴋɪ ᴍᴇꜱᴀᴊʟᴀʀɪ ɢᴏʀᴇᴍɪʏᴏʀᴜᴍ!__")
+        return await event.respond("⤇ ᴇꜱᴋɪ ᴍᴇꜱᴀᴊʟᴀʀɪ ɢᴏʀᴇᴍɪʏᴏʀᴜᴍ!")
   elif event.pattern_match.group(1) and event.reply_to_msg_id:
-    return await event.respond("__ᴇᴛɪᴋᴇᴛʟᴇᴍᴇ ᴍᴇꜱᴀᴊɪ ʏᴀᴢᴍᴀᴅɪɴ!__")
+    return await event.respond("⤇ ᴇᴛɪᴋᴇᴛʟᴇᴍᴇ ᴍᴇꜱᴀᴊɪ ʏᴀᴢᴍᴀᴅɪɴ! ")
   else:
-    return await event.respond(f"{nomesaj}\n**veya** /utag ⬅️ **tıklayın**")
+    return await event.respond(f"{nomesaj}")
   
   if mode == "text_on_cmd":
     anlik_calisan.append(event.chat_id)
     usrnum = 0
     usrtxt = ""
-    await event.respond(f"**✅ Etiketleme İşlemi Başarıyla Başlatıldı .**", buttons=(
+    await event.respond(f"🔮 Etiketleme İşlemi Başarıyla Başlatıldı!", buttons=(
                       [
-                      Button.url('💌 ʀᴇsᴍɪ ᴋᴀɴᴀʟ 💌', f'https://t.me/{GROUP_SUPPORT}')
+                      Button.url('📣ᴋᴀɴᴀʟ📣 ', f'https://t.me/{GROUP_SUPPORT}')
                       ]
                     ),
                     link_preview=False)
@@ -126,16 +126,16 @@ async def tag(event):
       if event.chat_id not in gece_tag:
         return
       if usrnum == 8:
-        await client.send_message(event.chat_id, f"**➻ {msg}\n\n{usrtxt}**")
+        await client.send_message(event.chat_id, f"➻ {msg}\n\n{usrtxt}")
         await asyncio.sleep(2)
         usrnum = 0
         usrtxt = ""
      
     sender = await event.get_sender()
     rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"      
-    if event.chat_id in rxyzdev_tagTot:await event.respond(f"**✅ İşlem Tamamlandı .\n\n👤 Etiketlerin Sayısı : {rxyzdev_tagTot[event.chat_id]}\n🗣 İşlemi Başlatan : {rxyzdev_initT}**", buttons=(
+    if event.chat_id in rxyzdev_tagTot:await event.respond(f"✅ İşlem Tamamlandı!\n\n👤 Etiketlerin Sayısı : {rxyzdev_tagTot[event.chat_id]}\n🗣 İşlemi Başlatan : {rxyzdev_initT}", buttons=(
                       [
-                      Button.url('💌 ʀᴇsᴍɪ ᴋᴀɴᴀʟ 💌', f'https://t.me/{GROUP_SUPPORT}')
+                      Button.url('📣ʀᴇsᴍɪ ᴋᴀɴᴀʟ📣', f'https://t.me/{GROUP_SUPPORT}')
                       ]
                     ),
                     link_preview=False)
@@ -145,13 +145,13 @@ async def tag(event):
 async def mentionalladmin(event):
   global anlik_calisan
   if event.is_private:
-    return await event.respond("**• Komutlar Sadece Grublarda Kullanılabilir .**")
+    return await event.respond("⤇ Komutlar Sadece Gruplarda Ve Kanallarda Kullanılabilir!")
   
   admins = []
   async for admin in client.iter_participants(event.chat_id):
     admins.append(admin.id)
   if not event.sender_id in admins:
-    return await event.respond("**• Üzgünüm Ama Yönetici Değilsiniz .**")
+    return await event.respond("⤇ Üzgünüm Ama Yönetici Değilsiniz!")
   
   if event.pattern_match.group(1):
     mode = "text_on_cmd"
@@ -160,19 +160,19 @@ async def mentionalladmin(event):
     mode = "text_on_reply"
     msg = event.reply_to_msg_id
     if msg == None:
-        return await event.respond("**Eski Mesajlar için Üyelerden Bahsedemem! (gruba eklemeden önce gönderilen mesajlar)**")
+        return await event.respond("⤇ Eski Mesajlar için Üyelerden Bahsedemem!")
   elif event.pattern_match.group(1) and event.reply_to_msg_id:
     return await event.respond("**Bana Bir Metin Ver!**")
   else:
-    return await event.respond("**💬 Bir Mesaj Verin .**\n**veya** /atag ⬅️ **tıklayın**")
+    return await event.respond(f"⤇ {nomesaj}")
   
   if mode == "text_on_cmd":
     anlik_calisan.append(event.chat_id)
     usrnum = 0
     usrtxt = ""
-    await event.respond("**✅ Etiketleme İşlemi Başarıyla Başlatıldı .**", buttons=(
+    await event.respond("🔮 Etiketleme İşlemi Başarıyla Başlatıldı!", buttons=(
                       [
-                      Button.url('💌 ʀᴇsᴍɪ ᴋᴀɴᴀʟ 💌', f'https://t.me/{GROUP_SUPPORT}')
+                      Button.url('📣ʀᴇsᴍɪ ᴋᴀɴᴀʟ📣', f'https://t.me/{GROUP_SUPPORT}')
                       ]
                     ),
                     link_preview=False)
@@ -181,9 +181,9 @@ async def mentionalladmin(event):
       usrnum += 1
       usrtxt += f"[{usr.first_name}](tg://user?id={usr.id}) , "
       if event.chat_id not in anlik_calisan:
-        await event.respond("**⛔ İşlem İptal Edildi .**", buttons=(
+        await event.respond("⛔ İşlem Başarıyla İptal Edildi!", buttons=(
                       [
-                      Button.url('💌 ʀᴇsᴍɪ ᴋᴀɴᴀʟ 💌', f'https://t.me/{GROUP_SUPPORT}')
+                      Button.url('📣ʀᴇsᴍɪ ᴋᴀɴᴀʟ📣', f'https://t.me/{GROUP_SUPPORT}')
                       ]
                     ),
                     link_preview=False)
@@ -196,7 +196,7 @@ async def mentionalladmin(event):
 
     sender = await event.get_sender()
     rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
-    if event.chat_id in rxyzdev_tagTot:await event.respond(f"**✅ İşlem Tamamlandı .**", buttons=(
+    if event.chat_id in rxyzdev_tagTot:await event.respond(f"**✅ Etiketleme İşlemi Başarıyla İptal Edildi!", buttons=(
                       [
                       Button.url('💌 ʀᴇsᴍɪ ᴋᴀɴᴀʟ 💌', f'https://t.me/{GROUP_SUPPORT}')
                       ]
@@ -225,9 +225,9 @@ async def cancel(event):
 
   sender = await event.get_sender()
   rxyzdev_stopT = f"[{sender.first_name}](tg://user?id={sender.id})"      
-  if event.chat_id in rxyzdev_tagTot:await event.respond(f"**⛔ İşlem İptal Edildi .\n\n👤 Etiketlerin Sayısı : {rxyzdev_tagTot[event.chat_id]}\n🗣 İptal Eden : {rxyzdev_stopT}**", buttons=(
+  if event.chat_id in rxyzdev_tagTot:await event.respond(f"**⛔ İşlem Başarıyla İptal Edildi!\n\n👤 Etiketlerin Sayısı : {rxyzdev_tagTot[event.chat_id]}\n🗣 İptal Eden : {rxyzdev_stopT}**", buttons=(
                       [
-                      Button.url('💌 ʀᴇsᴍɪ ᴋᴀɴᴀʟ 💌', f'https://t.me/{GROUP_SUPPORT}')
+                      Button.url('📣ʀᴇsᴍɪ ᴋᴀɴᴀʟ📣', f'https://t.me/{GROUP_SUPPORT}')
                       ]
                     ),
                     link_preview=False)
@@ -310,35 +310,49 @@ async def hg(bot: Client, msg: Message):
     for new_user in msg.new_chat_members:
         if str(new_user.id) == str(BOT_ID):
             await msg.reply(
-                f'''**📖 Hey , {msg.from_user.mention}\nBeni Gruba Eklediğin İçin Teşekkürler .**''', 
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⚙️ Daha Fazla Bilgi", url=f"https://t.me/{BOT_USERNAME}?start")]])
+                f'''**📖 Hey , {msg.from_user.mention}\nBeni Gruba Eklediğin İçin Teşekkürler!''', 
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⚙️ Daha Fazla Bilgi için!", url=f"https://t.me/{BOT_USERNAME}?start")]])
     )
         elif str(new_user.id) == str(OWNER_ID):
-            await msg.reply('📣 𝖡𝗈𝗍𝗎𝗇 𝖲𝖺𝗁𝗂𝖻𝗂 𝖦𝗋𝗎𝖻𝖺 𝖪𝖺𝗍ı𝗅𝖽ı !')
+            await msg.reply('📣 𝖡𝗈𝗍𝗎𝗇 𝖲𝖺𝗁𝗂𝖻𝗂 𝖦𝗋𝗎𝖻𝖺 𝖪𝖺𝗍ı𝗅𝖽ı!')
 
 
 # Eros oku
 
-@app.on_message(filters.command(["eros"],["/", ""]) & ~filters.private & ~filters.channel)
-async def ship(c:Client, m:Message):
-    users = await c.get_chat_members(m.chat.id, limit=200)
+import random
+
+@client.on(events.NewMessage(pattern="^/eros$"))
+async def eros(event):
+    # Sadece grup ve kanallarda çalıştır
+    if event.is_private:
+        await event.respond("Bu komut yalnızca grup ve kanallarda kullanılabilir!")
+        return
+
+    # Grup veya kanal katılımcılarını al
+    users = await client.get_participants(event.chat_id, limit=200)
     
-    users_l = []
+    users_list = []
     for user in users:
-        if user.user.is_bot or user.user.is_deleted:
-            pass
+        if user.bot or user.deleted:
+            continue  # Silinmiş hesapları veya botları atla
         else:
-            users_l.append(user.user)
-    count = len(users_l)
+            users_list.append(user)
+    count = len(users_list)
     
-    ilk = users_l[randint(0,count)]
-    iki = users_l[randint(0,count)]
+    # Rastgele iki kullanıcı seç
+    first_user = users_list[random.randint(0, count - 1)]
+    second_user = users_list[random.randint(0, count - 1)]
     
-    if ilk.id==1550788256 or ilk.id==5576614947 or iki.id==5375589992 or iki.id==5576614947:
-        await m.reply(f"**💌 Eros'un oku atıldı.\n• Aşıklar  :\n\n[ ✍🏻 ](tg://user?id=5053767281) ❤️ [ . ](tg://user?id=5533927130)**")
-        
+    # Belirli kullanıcıları kontrol et
+    if (first_user.id == 1550788256 or first_user.id == 5576614947
+        or second_user.id == 5375589992 or second_user.id == 5576614947):
+        # Belirli kullanıcılar eşleştiğinde özel bir yanıt gönder
+        await event.respond("**💌 Eros'un oku atıldı.\n• Aşıklar  :\n\n@[kullanici1](tg://user?id=5053767281) ❤️ @[kullanici2](tg://user?id=5533927130)**")
     else:
-        await m.reply(f"**💌 Eros'un oku atıldı.\n• Aşıklar  :\n\n{ilk.mention} ❣️ {iki.mention}**")
+        # Rastgele seçilen kullanıcıların adlarını veya kullanıcı adlarını gönder
+        percentage = random.randint(1, 100)  # Rastgele bir yüzde hesapla
+        await event.respond(f"**💌 Eros'un oku atıldı.\n• Aşıklar  :\n\n@{first_user.username} ❣️ @{second_user.username}\n\n📊 Eşleşme Yüzdesi: {percentage}%**")
+
 
 
 ################### VERİTABANI VERİ GİRİŞ ÇIKIŞI #########################
