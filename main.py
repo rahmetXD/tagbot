@@ -590,7 +590,6 @@ async def start_tagging(event):
 
                 tagging = False  # Etiketleme işlemi bitti
                 current_question_index = 0  # Soruları sıfırla
-                await event.respond("Tüm üyeler etiketlendi!")
         else:
             await event.respond("Bu komutu kullanabilmek için bir grup admini olmalısınız!")
     else:
@@ -599,13 +598,17 @@ async def start_tagging(event):
 @client.on(events.NewMessage(pattern="/cancel"))
 async def cancel_tagging(event):
     global tagging
-    tagging = False  # Etiketleme işlemi iptal edildi
-    await event.respond(
-        "Etiketleme İşlemi İptal Edildi!",
-        buttons=[
-            [Button.url('🛡ᴏᴡɴᴇʀ🛡', 'https://t.me/rahmetiNC')]
-        ]
-    )
+    if tagging:
+        tagging = False  # Etiketleme işlemi iptal edildi
+        current_question_index = 0  # Soruları sıfırla
+        await event.respond(
+            "Etiketleme İşlemi İptal Edildi!",
+            buttons=[
+                [Button.url('🛡ᴏᴡɴᴇʀ🛡', 'https://t.me/rahmetiNC')]
+            ]
+        )
+    else:
+        await event.respond("Şu anda etiketleme işlemi devam etmiyor.")
 
 
 ################### VERİTABANI VERİ GİRİŞ ÇIKIŞI #########################
